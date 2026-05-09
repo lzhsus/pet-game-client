@@ -9,7 +9,7 @@ export class UserManager {
     const res = await Http.post<{
       token: string;
       user: UserModel;
-    }>('/api/login');
+    }>('/api/auth/login');
 
     if (res.code !== 0) {
       throw new Error(res.message || '登录失败');
@@ -24,7 +24,7 @@ export class UserManager {
   static async getInfo(): Promise<UserModel> {
     const res = await Http.get<{
       user: UserModel;
-    }>('/api/user/info');
+    }>('/api/user/profile');
 
     if (res.code !== 0) {
       throw new Error(res.message || '获取用户失败');
