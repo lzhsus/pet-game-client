@@ -1,6 +1,10 @@
 import { _decorator, Component, Label } from 'cc';
 import { UserManager } from '../manager/UserManager';
 import { PetManager } from '../manager/PetManager';
+import { TaskManager } from '../manager/TaskManager';
+import { BagManager } from '../manager/BagManager';
+import { ShopManager } from '../manager/ShopManager';
+import { RewardManager } from '../manager/RewardManager';
 
 const { ccclass, property } = _decorator;
 
@@ -29,7 +33,11 @@ export class HomeScene extends Component {
     try {
       this.setStatus('连接服务器中...');
       await UserManager.login();
+      await UserManager.getInfo();
       await PetManager.getInfo();
+      await TaskManager.list();
+      await BagManager.list();
+      await ShopManager.list();
       this.refreshView();
       this.setStatus('服务器连接成功');
     } catch (error) {
@@ -50,6 +58,23 @@ export class HomeScene extends Component {
     await this.runPetAction('play', '玩耍成功');
   }
 
+  public async onClickDailySign(): Promise<void> {
+    try {
+      this.setStatus('签到中...');
+      const reward = await RewardManager.dailySign();
+      await UserManager.getInfo();
+      this.refreshView();
+      this.setStatus(reward.message || '签到完成');
+    } catch (error) {
+      console.error(error);
+      this.setStatus(error instanceof Error ? error.message : '签到失败');
+    }
+  }
+
+  public async onClickRefresh(): Promise<void> {
+    await this.initGame();
+  }
+
   private async runPetAction(type: 'feed' | 'bath' | 'play', message: string): Promise<void> {
     try {
       this.setStatus('操作中...');
@@ -66,6 +91,8 @@ export class HomeScene extends Component {
         await PetManager.play();
       }
 
+      await UserManager.getInfo();
+      await TaskManager.list();
       this.refreshView();
       this.setStatus(message);
     } catch (error) {
