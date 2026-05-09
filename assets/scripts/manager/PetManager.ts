@@ -5,16 +5,23 @@ import { UserManager } from './UserManager';
 export class PetManager {
   static pet: PetModel | null = null;
 
+  static normalizePet(pet: any): PetModel {
+    return {
+      ...pet,
+      clean: pet.clean_value ?? pet.clean ?? 0,
+    } as PetModel;
+  }
+
   static async getInfo(): Promise<PetModel> {
     const res = await Http.get<{
       pet: PetModel;
-    }>('/api/pet/info');
+    }>('/api/pet/profile');
 
     if (res.code !== 0) {
       throw new Error(res.message || '获取宠物失败');
     }
 
-    this.pet = res.data.pet;
+    this.pet = this.normalizePet(res.data.pet);
 
     return this.pet;
   }
@@ -41,7 +48,7 @@ export class PetManager {
       throw new Error(res.message || '宠物操作失败');
     }
 
-    this.pet = res.data.pet;
+    this.pet = this.normalizePet(res.data.pet);
 
     if (res.data.user) {
       UserManager.updateUser(res.data.user);
