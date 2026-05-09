@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 61
+      "__id__": 62
     },
     "_id": "296060af-b944-4124-901f-9c508c56368b"
   },
@@ -106,6 +106,9 @@
       },
       {
         "__id__": 60
+      },
+      {
+        "__id__": 61
       }
     ],
     "_prefab": null,
@@ -1024,7 +1027,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -130,
+      "y": -300,
       "z": 0
     },
     "_lrot": {
@@ -1062,8 +1065,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 98.6953125,
-      "height": 136.76
+      "width": 0,
+      "height": 32.76
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1092,11 +1095,11 @@
       "b": 128,
       "a": 255
     },
-    "_string": "等级：1\n经验：0\n饥饿：60\n清洁：60\n心情：60",
+    "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 24,
-    "_fontSize": 24,
+    "_actualFontSize": 22,
+    "_fontSize": 22,
     "_fontFamily": "Arial",
     "_lineHeight": 26,
     "_overflow": 0,
@@ -2346,7 +2349,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 750,
-      "height": 1599.9999999999998
+      "height": 1600
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2429,30 +2432,78 @@
     "_id": "aa1lmviflEzolFSURyPpLy"
   },
   {
+    "__type__": "290e7cUgvlI9riBPV/GumaL",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "bg": {
+      "__id__": 5
+    },
+    "topBar": {
+      "__id__": 9
+    },
+    "petArea": {
+      "__id__": 17
+    },
+    "bottomNav": {
+      "__id__": 55
+    },
+    "coinLabel": {
+      "__id__": 12
+    },
+    "diamondLabel": {
+      "__id__": 15
+    },
+    "petNameLabel": {
+      "__id__": 23
+    },
+    "petInfoLabel": {
+      "__id__": 26
+    },
+    "statusLabel": {
+      "__id__": 30
+    },
+    "feedButtonLabel": {
+      "__id__": 34
+    },
+    "bathButtonLabel": {
+      "__id__": 42
+    },
+    "playButtonLabel": {
+      "__id__": 50
+    },
+    "_id": "40aBCUyNZHho6xmB8ycs6q"
+  },
+  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 62
-    },
-    "shadows": {
       "__id__": 63
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 64
     },
-    "fog": {
+    "_skybox": {
       "__id__": 65
     },
-    "octree": {
+    "fog": {
       "__id__": 66
     },
-    "skin": {
+    "octree": {
       "__id__": 67
     },
-    "lightProbeInfo": {
+    "skin": {
       "__id__": 68
     },
-    "postSettings": {
+    "lightProbeInfo": {
       "__id__": 69
+    },
+    "postSettings": {
+      "__id__": 70
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
