@@ -114,16 +114,13 @@ export class HomeScene extends Component {
     }
 
     if (this.petNameLabel && pet) {
-      this.petNameLabel.string = pet.name;
+      this.petNameLabel.string = pet.name||"未知宠物";
     }
 
     if (this.petInfoLabel && pet) {
       this.petInfoLabel.string = [
-        `等级：${pet.level}`,
-        `经验：${pet.exp}`,
-        `饥饿：${pet.hunger}`,
-        `清洁：${pet.clean}`,
-        `心情：${pet.mood}`,
+        `等级：${pet.level}    经验：${pet.exp}`,
+        `饥饿：${pet.hunger}   清洁：${pet.clean}    心情：${pet.mood}`,
       ].join('\n');
     }
   }
