@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 139
+      "__id__": 138
     },
     "_id": "296060af-b944-4124-901f-9c508c56368b"
   },
@@ -103,9 +103,6 @@
       },
       {
         "__id__": 137
-      },
-      {
-        "__id__": 138
       }
     ],
     "_prefab": null,
@@ -400,7 +397,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 700,
+      "y": 577,
       "z": 0
     },
     "_lrot": {
@@ -1148,7 +1145,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 200,
+      "y": 77,
       "z": 0
     },
     "_lrot": {
@@ -1917,7 +1914,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -290,
+      "y": -413,
       "z": 0
     },
     "_lrot": {
@@ -2171,7 +2168,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -460,
+      "y": -583,
       "z": 0
     },
     "_lrot": {
@@ -3868,7 +3865,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -720,
+      "y": -843,
       "z": 0
     },
     "_lrot": {
@@ -3945,7 +3942,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -123,
       "z": 0
     },
     "_lrot": {
@@ -4000,7 +3997,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -193.279,
-      "y": -44.778,
+      "y": -60,
       "z": 0
     },
     "_lrot": {
@@ -4047,8 +4044,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -44.49,
-      "y": 31.132,
+      "x": -40,
+      "y": 30,
       "z": 0
     },
     "_lrot": {
@@ -4180,7 +4177,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -60,
-      "y": -2.795,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -4289,7 +4286,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -60,
-      "y": -20,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -4427,7 +4424,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -44.778,
+      "y": -60,
       "z": 0
     },
     "_lrot": {
@@ -4474,8 +4471,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -44.49,
-      "y": 31.132,
+      "x": -40,
+      "y": 30,
       "z": 0
     },
     "_lrot": {
@@ -4607,7 +4604,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -60,
-      "y": -2.795,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -4716,7 +4713,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -60,
-      "y": -20,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -4854,7 +4851,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 193.279,
-      "y": -44.778,
+      "y": -60,
       "z": 0
     },
     "_lrot": {
@@ -4901,8 +4898,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -44.49,
-      "y": 31.132,
+      "x": -40,
+      "y": 30,
       "z": 0
     },
     "_lrot": {
@@ -5034,7 +5031,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -60,
-      "y": -2.795,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -5143,7 +5140,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -60,
-      "y": -20,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -5367,84 +5364,43 @@
     "statusLabel": {
       "__id__": 51
     },
+    "hungerBarFill": {
+      "__id__": 107
+    },
+    "cleanBarFill": {
+      "__id__": 118
+    },
+    "moodBarFill": {
+      "__id__": 129
+    },
+    "statusBarMaxWidth": 100,
     "_id": "aa1lmviflEzolFSURyPpLy"
-  },
-  {
-    "__type__": "290e7cUgvlI9riBPV/GumaL",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 2
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "bg": {
-      "__id__": 5
-    },
-    "topBar": {
-      "__id__": 9
-    },
-    "petArea": {
-      "__id__": 28
-    },
-    "bottomNav": {
-      "__id__": 97
-    },
-    "petSprite": null,
-    "feedIcon": null,
-    "bathIcon": null,
-    "playIcon": null,
-    "coinLabel": {
-      "__id__": 16
-    },
-    "diamondLabel": {
-      "__id__": 24
-    },
-    "petNameLabel": {
-      "__id__": 37
-    },
-    "petInfoLabel": {
-      "__id__": 40
-    },
-    "statusLabel": {
-      "__id__": 51
-    },
-    "feedButtonLabel": {
-      "__id__": 65
-    },
-    "bathButtonLabel": {
-      "__id__": 78
-    },
-    "playButtonLabel": {
-      "__id__": 90
-    },
-    "_id": "40aBCUyNZHho6xmB8ycs6q"
   },
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 140
+      "__id__": 139
     },
     "shadows": {
-      "__id__": 141
+      "__id__": 140
     },
     "_skybox": {
-      "__id__": 142
+      "__id__": 141
     },
     "fog": {
-      "__id__": 143
+      "__id__": 142
     },
     "octree": {
-      "__id__": 144
+      "__id__": 143
     },
     "skin": {
-      "__id__": 145
+      "__id__": 144
     },
     "lightProbeInfo": {
-      "__id__": 146
+      "__id__": 145
     },
     "postSettings": {
-      "__id__": 147
+      "__id__": 146
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
