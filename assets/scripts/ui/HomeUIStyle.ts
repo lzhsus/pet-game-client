@@ -1,4 +1,4 @@
-import { _decorator, Color, Component, Label, Node, Sprite, UITransform, Vec3, Widget } from 'cc';
+import { _decorator, Color, Component, Label, Node, resources, Sprite, SpriteFrame, UITransform, Vec3 } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -15,6 +15,18 @@ export class HomeUIStyle extends Component {
 
   @property(Node)
   bottomNav: Node | null = null;
+
+  @property(Node)
+  petSprite: Node | null = null;
+
+  @property(Node)
+  feedIcon: Node | null = null;
+
+  @property(Node)
+  bathIcon: Node | null = null;
+
+  @property(Node)
+  playIcon: Node | null = null;
 
   @property(Label)
   coinLabel: Label | null = null;
@@ -60,6 +72,13 @@ export class HomeUIStyle extends Component {
     this.move(this.bottomNav, 0, -590);
     this.styleNode(this.bottomNav, new Color(255, 255, 255, 220));
 
+    this.resize(this.petSprite, 280, 280);
+    this.move(this.petSprite, 0, 145);
+
+    this.resize(this.feedIcon, 46, 46);
+    this.resize(this.bathIcon, 46, 46);
+    this.resize(this.playIcon, 46, 46);
+
     this.styleLabel(this.coinLabel, 30, new Color(107, 72, 42, 255), true);
     this.styleLabel(this.diamondLabel, 30, new Color(107, 72, 42, 255), true);
     this.styleLabel(this.petNameLabel, 42, new Color(72, 47, 31, 255), true);
@@ -69,6 +88,29 @@ export class HomeUIStyle extends Component {
     this.styleLabel(this.feedButtonLabel, 30, Color.WHITE, true, '喂食');
     this.styleLabel(this.bathButtonLabel, 30, Color.WHITE, true, '洗澡');
     this.styleLabel(this.playButtonLabel, 30, Color.WHITE, true, '玩耍');
+
+    this.loadSprite(this.petSprite, 'textures/ui/pet/pet_cat/spriteFrame');
+    this.loadSprite(this.feedIcon, 'textures/ui/icon/food/spriteFrame');
+    this.loadSprite(this.bathIcon, 'textures/ui/icon/bath/spriteFrame');
+    this.loadSprite(this.playIcon, 'textures/ui/icon/play/spriteFrame');
+  }
+
+  private loadSprite(node: Node | null, path: string): void {
+    if (!node) return;
+
+    resources.load(path, SpriteFrame, (error, spriteFrame) => {
+      if (error || !spriteFrame) {
+        console.warn(`资源加载失败：${path}`, error);
+        return;
+      }
+
+      let sprite = node.getComponent(Sprite);
+      if (!sprite) {
+        sprite = node.addComponent(Sprite);
+      }
+      sprite.spriteFrame = spriteFrame;
+      sprite.color = Color.WHITE;
+    });
   }
 
   private styleNode(node: Node | null, color: Color): void {
