@@ -25,8 +25,15 @@ export class HomeScene extends Component {
   @property(Label)
   statusLabel: Label | null = null;
 
+  private readonly refreshIntervalSeconds = 60;
+
   protected async start(): Promise<void> {
     await this.initGame();
+    this.schedule(this.refreshRemoteData, this.refreshIntervalSeconds);
+  }
+
+  protected onDestroy(): void {
+    this.unschedule(this.refreshRemoteData);
   }
 
   private async initGame(): Promise<void> {
@@ -72,7 +79,18 @@ export class HomeScene extends Component {
   }
 
   public async onClickRefresh(): Promise<void> {
-    await this.initGame();
+    await this.refreshRemoteData();
+  }
+
+  private async refreshRemoteData(): Promise<void> {
+    try {
+      await UserManager.getInfo();
+      await PetManager.getInfo();
+      this.refreshView();
+    } catch (error) {
+      console.error(error);
+      this.setStatus(error instanceof Error ? error.message : '刷新失败');
+    }
   }
 
   private async runPetAction(type: 'feed' | 'bath' | 'play', message: string): Promise<void> {
@@ -93,6 +111,7 @@ export class HomeScene extends Component {
 
       await UserManager.getInfo();
       await TaskManager.list();
+      await BagManager.list();
       this.refreshView();
       this.setStatus(message);
     } catch (error) {
@@ -114,7 +133,7 @@ export class HomeScene extends Component {
     }
 
     if (this.petNameLabel && pet) {
-      this.petNameLabel.string = pet.name||"未知宠物";
+      this.petNameLabel.string = pet.name || '未知宠物';
     }
 
     if (this.petInfoLabel && pet) {
