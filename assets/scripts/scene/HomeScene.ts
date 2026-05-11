@@ -1,4 +1,4 @@
-import { _decorator, Component, Label } from 'cc';
+import { _decorator, Component, Label, Node, UITransform } from 'cc';
 import { UserManager } from '../manager/UserManager';
 import { PetManager } from '../manager/PetManager';
 import { TaskManager } from '../manager/TaskManager';
@@ -24,6 +24,18 @@ export class HomeScene extends Component {
 
   @property(Label)
   statusLabel: Label | null = null;
+
+  @property(Node)
+  hungerBarFill: Node | null = null;
+
+  @property(Node)
+  cleanBarFill: Node | null = null;
+
+  @property(Node)
+  moodBarFill: Node | null = null;
+
+  @property
+  statusBarMaxWidth = 132;
 
   private readonly refreshIntervalSeconds = 60;
 
@@ -142,6 +154,22 @@ export class HomeScene extends Component {
         `饥饿：${pet.hunger}   清洁：${pet.clean}    心情：${pet.mood}`,
       ].join('\n');
     }
+
+    if (pet) {
+      this.setBarValue(this.hungerBarFill, pet.hunger);
+      this.setBarValue(this.cleanBarFill, pet.clean);
+      this.setBarValue(this.moodBarFill, pet.mood);
+    }
+  }
+
+  private setBarValue(barNode: Node | null, value: number): void {
+    if (!barNode) return;
+
+    const transform = barNode.getComponent(UITransform);
+    if (!transform) return;
+
+    const percent = Math.max(0, Math.min(100, Number(value) || 0)) / 100;
+    transform.setContentSize(this.statusBarMaxWidth * percent, transform.height);
   }
 
   private setStatus(message: string): void {
