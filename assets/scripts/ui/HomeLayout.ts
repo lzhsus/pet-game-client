@@ -10,14 +10,17 @@ export class HomeLayout extends Component {
   @property(Node)
   topBar: Node | null = null;
 
+  // Figma / Cocos 设计稿尺寸。这里不是设备真实尺寸，只是我们的坐标基准。
   @property
   designWidth = 750;
 
   @property
   designHeight = 1600;
 
+  // 设计稿里 TopBar 距离设计稿顶部的距离。
+  // 注意：真实设备会用 screenHeight / designHeight 自动换算，不要直接当成最终像素。
   @property
-  topBarTop = 150;
+  topBarDesignTop = 150;
 
   protected onLoad(): void {
     this.applyLayout();
@@ -29,6 +32,7 @@ export class HomeLayout extends Component {
   }
 
   private applyLayout(): void {
+    // 当前设备 / 微信小游戏当前可视区域尺寸。不同手机这里会不一样。
     const visibleSize = view.getVisibleSize();
     const width = visibleSize.width;
     const height = visibleSize.height;
