@@ -32,38 +32,23 @@ export class HomeLayout extends Component {
     const visibleSize = view.getVisibleSize();
     const width = visibleSize.width;
     const height = visibleSize.height;
-    const scaleX = width / this.designWidth;
-    const scaleY = height / this.designHeight;
 
-    console.log(
-      `[HomeLayout] screen=${width}x${height}, design=${this.designWidth}x${this.designHeight}, scaleX=${scaleX.toFixed(4)}, scaleY=${scaleY.toFixed(4)}`
-    );
-
-    this.layoutBg(width, height);
-    this.layoutTopBar(height, scaleY);
+    this.layoutBg(height);
+    this.layoutTopBar(height);
   }
 
-  private layoutBg(width: number, height: number): void {
+  private layoutBg(height: number): void {
     if (!this.bg) return;
-
-    const transform = this.getTransform(this.bg);
-    transform.setContentSize(width, height);
-    this.bg.setPosition(new Vec3(0, 0, 0));
+    this.bg.setPosition(new Vec3(0, height/2, 0));
   }
 
-  private layoutTopBar(screenHeight: number, scaleY: number): void {
+  private layoutTopBar(height: number): void {
     if (!this.topBar) return;
 
-    const top = this.topBarTop * scaleY;
-    const y = screenHeight / 2 - top;
-    this.topBar.setPosition(new Vec3(0, y, 0));
+    // 你需要获取不同设备  头部的高度
+    const designTop = 100;
+
+    this.topBar.setPosition(new Vec3(0, height/2 - designTop, 0));
   }
 
-  private getTransform(node: Node): UITransform {
-    let transform = node.getComponent(UITransform);
-    if (!transform) {
-      transform = node.addComponent(UITransform);
-    }
-    return transform;
-  }
 }
