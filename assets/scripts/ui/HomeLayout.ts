@@ -10,14 +10,17 @@ export class HomeLayout extends Component {
   @property(Node)
   topBar: Node | null = null;
 
+  // Figma / Cocos 设计稿尺寸。这里不是设备真实尺寸，只是我们的坐标基准。
   @property
   designWidth = 750;
 
   @property
   designHeight = 1600;
 
+  // 设计稿里 TopBar 距离设计稿顶部的距离。
+  // 注意：真实设备会用 screenHeight / designHeight 自动换算，不要直接当成最终像素。
   @property
-  topBarTop = 150;
+  topBarDesignTop = 150;
 
   protected onLoad(): void {
     this.applyLayout();
@@ -29,33 +32,41 @@ export class HomeLayout extends Component {
   }
 
   private applyLayout(): void {
+    // 当前设备 / 微信小游戏当前可视区域尺寸。不同手机这里会不一样。
     const visibleSize = view.getVisibleSize();
-    const width = visibleSize.width;
-    const height = visibleSize.height;
-    const scaleX = width / this.designWidth;
-    const scaleY = height / this.designHeight;
+    const screenWidth = visibleSize.width;
+    const screenHeight = visibleSize.height;
+
+    // 真实屏幕与 750 × 1600 设计稿之间的换算比例。
+    const scaleX = screenWidth / this.designWidth;
+    const scaleY = screenHeight / this.designHeight;
 
     console.log(
-      `[HomeLayout] screen=${width}x${height}, design=${this.designWidth}x${this.designHeight}, scaleX=${scaleX.toFixed(4)}, scaleY=${scaleY.toFixed(4)}`
+      `[HomeLayout] screen=${screenWidth}x${screenHeight}, design=${this.designWidth}x${this.designHeight}, scaleX=${scaleX.toFixed(4)}, scaleY=${scaleY.toFixed(4)}`
     );
 
-    this.layoutBg(width, height);
-    this.layoutTopBar(height, scaleY);
+    this.layoutBg(screenWidth, screenHeight);
+    this.layoutTopBar(screenHeight, scaleY);
   }
 
-  private layoutBg(width: number, height: number): void {
+  private layoutBg(screenWidth: number, screenHeight: number): void {
     if (!this.bg) return;
 
+    // 背景永远按当前设备可视区域铺满，不使用设计稿尺寸。
     const transform = this.getTransform(this.bg);
-    transform.setContentSize(width, height);
+    transform.setContentSize(screenWidth, screenHeight);
     this.bg.setPosition(new Vec3(0, 0, 0));
   }
 
   private layoutTopBar(screenHeight: number, scaleY: number): void {
     if (!this.topBar) return;
 
-    const top = this.topBarTop * scaleY;
-    const y = screenHeight / 2 - top;
+    // 将设计稿 top 值换算成当前设备的 top 值。
+    const realTop = this.topBarDesignTop * scaleY;
+
+    // Cocos UI 坐标原点在 Canvas 中心：顶部 y = screenHeight / 2。
+    // 所以节点 y = 顶部坐标 - 真实 top 距离。
+    const y = screenHeight / 2 - realTop;
     this.topBar.setPosition(new Vec3(0, y, 0));
   }
 
