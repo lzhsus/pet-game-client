@@ -1,6 +1,8 @@
-import { _decorator, Component, Node, UITransform, view, Vec3 } from 'cc';
+import { _decorator, Component, Node, sys, UITransform, view, Vec3 } from 'cc';
 
 const { ccclass, property } = _decorator;
+
+declare const wx: any;
 
 @ccclass('HomeLayout')
 export class HomeLayout extends Component {
@@ -10,17 +12,16 @@ export class HomeLayout extends Component {
   @property(Node)
   topBar: Node | null = null;
 
-  // Figma / Cocos 设计稿尺寸。这里不是设备真实尺寸，只是我们的坐标基准。
+  // Figma / Cocos 设计稿尺寸。这里只作为普通内容间距的换算基准。
   @property
   designWidth = 750;
 
   @property
   designHeight = 1600;
 
-  // 设计稿里 TopBar 距离设计稿顶部的距离。
-  // 注意：真实设备会用 screenHeight / designHeight 自动换算，不要直接当成最终像素。
+  // TopBar 在设备安全区下面额外保留的间距，不是固定头部高度。
   @property
-  topBarDesignTop = 150;
+  topBarSafePadding = 24;
 
   protected onLoad(): void {
     this.applyLayout();
@@ -32,27 +33,69 @@ export class HomeLayout extends Component {
   }
 
   private applyLayout(): void {
-    // 当前设备 / 微信小游戏当前可视区域尺寸。不同手机这里会不一样。
+    // Cocos 当前可视区域，单位是 Cocos UI 坐标。
     const visibleSize = view.getVisibleSize();
-    const width = visibleSize.width;
-    const height = visibleSize.height;
+    const screenWidth = visibleSize.width;
+    const screenHeight = visibleSize.height;
 
-    this.layoutBg(height);
-    this.layoutTopBar(height);
+    // 微信设备安全区顶部，单位转换成 Cocos UI 坐标。
+    const safeTop = this.getSafeTopInCocosUnits(screenHeight);
+
+    console.log(`[HomeLayout] screen=${screenWidth}x${screenHeight}, safeTop=${safeTop}`);
+
+    this.layoutBg(screenWidth, screenHeight);
+    this.layoutTopBar(screenHeight, safeTop);
   }
 
-  private layoutBg(height: number): void {
+  private layoutBg(screenWidth: number, screenHeight: number): void {
     if (!this.bg) return;
-    this.bg.setPosition(new Vec3(0, height/2, 0));
+
+    // 背景按当前设备可视区域铺满。
+    const transform = this.getTransform(this.bg);
+    transform.setContentSize(screenWidth, screenHeight);
+    this.bg.setPosition(new Vec3(0, 0, 0));
   }
 
-  private layoutTopBar(height: number): void {
+  private layoutTopBar(screenHeight: number, safeTop: number): void {
     if (!this.topBar) return;
 
-    // 你需要获取不同设备  头部的高度
-    const designTop = 100;
+    const topBarTransform = this.topBar.getComponent(UITransform);
+    const topBarHeight = topBarTransform ? topBarTransform.height : 0;
 
-    this.topBar.setPosition(new Vec3(0, height/2 - designTop, 0));
+    // 顶部坐标是 screenHeight / 2。
+    // safeTop 是设备刘海/状态栏/微信顶部安全区。
+    // topBarSafePadding 是安全区下面的视觉留白。
+    // 这里按节点中心点定位，所以还要减掉 TopBar 自身高度的一半。
+    const y = screenHeight / 2 - safeTop - this.topBarSafePadding - topBarHeight / 2;
+
+    this.topBar.setPosition(new Vec3(0, y, 0));
   }
 
+  private getSafeTopInCocosUnits(screenHeight: number): number {
+    if (!sys.isNative && typeof wx !== 'undefined' && wx.getSystemInfoSync) {
+      try {
+        const info = wx.getSystemInfoSync();
+        const windowHeight = Number(info.windowHeight || 0);
+        const safeAreaTop = Number(info.safeArea?.top || 0);
+        const statusBarHeight = Number(info.statusBarHeight || 0);
+        const topInPx = safeAreaTop > 0 ? safeAreaTop : statusBarHeight;
+
+        if (windowHeight > 0 && topInPx > 0) {
+          return topInPx * (screenHeight / windowHeight);
+        }
+      } catch (error) {
+        console.warn('[HomeLayout] wx.getSystemInfoSync failed', error);
+      }
+    }
+
+    return 0;
+  }
+
+  private getTransform(node: Node): UITransform {
+    let transform = node.getComponent(UITransform);
+    if (!transform) {
+      transform = node.addComponent(UITransform);
+    }
+    return transform;
+  }
 }
