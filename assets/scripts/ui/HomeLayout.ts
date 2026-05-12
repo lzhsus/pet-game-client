@@ -32,9 +32,15 @@ export class HomeLayout extends Component {
     const visibleSize = view.getVisibleSize();
     const width = visibleSize.width;
     const height = visibleSize.height;
+    const scaleX = width / this.designWidth;
+    const scaleY = height / this.designHeight;
+
+    console.log(
+      `[HomeLayout] screen=${width}x${height}, design=${this.designWidth}x${this.designHeight}, scaleX=${scaleX.toFixed(4)}, scaleY=${scaleY.toFixed(4)}`
+    );
 
     this.layoutBg(width, height);
-    this.layoutTopBar(height);
+    this.layoutTopBar(height, scaleY);
   }
 
   private layoutBg(width: number, height: number): void {
@@ -45,10 +51,11 @@ export class HomeLayout extends Component {
     this.bg.setPosition(new Vec3(0, 0, 0));
   }
 
-  private layoutTopBar(screenHeight: number): void {
+  private layoutTopBar(screenHeight: number, scaleY: number): void {
     if (!this.topBar) return;
 
-    const y = screenHeight / 2 - this.topBarTop;
+    const top = this.topBarTop * scaleY;
+    const y = screenHeight / 2 - top;
     this.topBar.setPosition(new Vec3(0, y, 0));
   }
 
