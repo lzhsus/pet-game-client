@@ -12,16 +12,16 @@ export class HomeLayout extends Component {
   @property(Node)
   topBar: Node | null = null;
 
-  // Figma / Cocos 设计稿尺寸。这里只作为普通内容间距的换算基准。
+  // 设计稿尺寸只作为比例换算基准，不代表真实设备尺寸。
   @property
   designWidth = 750;
 
   @property
   designHeight = 1600;
 
-  // TopBar 在设备安全区下面额外保留的间距，不是固定头部高度。
+  // TopBar 与微信胶囊按钮/安全区底部之间的额外留白，按设计稿高度比例换算。
   @property
-  topBarSafePadding = 24;
+  topBarGap = 24;
 
   protected onLoad(): void {
     this.applyLayout();
@@ -33,62 +33,74 @@ export class HomeLayout extends Component {
   }
 
   private applyLayout(): void {
-    // Cocos 当前可视区域，单位是 Cocos UI 坐标。
     const visibleSize = view.getVisibleSize();
     const screenWidth = visibleSize.width;
     const screenHeight = visibleSize.height;
+    const scaleY = screenHeight / this.designHeight;
 
-    // 微信设备安全区顶部，单位转换成 Cocos UI 坐标。
-    const safeTop = this.getSafeTopInCocosUnits(screenHeight);
+    // 运行时读取当前设备的微信顶部安全区，不再使用固定 top 值。
+    const safeTop = this.getWechatTopSafeAreaInCocosUnits(screenHeight);
+    const gap = this.topBarGap * scaleY;
 
-    console.log(`[HomeLayout] screen=${screenWidth}x${screenHeight}, safeTop=${safeTop}`);
+    console.log(
+      `[HomeLayout] screen=${screenWidth}x${screenHeight}, safeTop=${safeTop.toFixed(2)}, gap=${gap.toFixed(2)}`
+    );
 
     this.layoutBg(screenWidth, screenHeight);
-    this.layoutTopBar(screenHeight, safeTop);
+    this.layoutTopBar(screenHeight, safeTop, gap);
   }
 
   private layoutBg(screenWidth: number, screenHeight: number): void {
     if (!this.bg) return;
 
-    // 背景按当前设备可视区域铺满。
+    // 背景永远铺满当前设备可视区域。
     const transform = this.getTransform(this.bg);
     transform.setContentSize(screenWidth, screenHeight);
     this.bg.setPosition(new Vec3(0, 0, 0));
   }
 
-  private layoutTopBar(screenHeight: number, safeTop: number): void {
+  private layoutTopBar(screenHeight: number, safeTop: number, gap: number): void {
     if (!this.topBar) return;
 
     const topBarTransform = this.topBar.getComponent(UITransform);
     const topBarHeight = topBarTransform ? topBarTransform.height : 0;
 
-    // 顶部坐标是 screenHeight / 2。
-    // safeTop 是设备刘海/状态栏/微信顶部安全区。
-    // topBarSafePadding 是安全区下面的视觉留白。
-    // 这里按节点中心点定位，所以还要减掉 TopBar 自身高度的一半。
-    const y = screenHeight / 2 - safeTop - this.topBarSafePadding - topBarHeight / 2;
-
+    // Cocos UI 原点在屏幕中心，顶部 y = screenHeight / 2。
+    // safeTop 已经包含状态栏/刘海/微信胶囊按钮占用高度。
+    // 节点定位点在中心，所以还要减去 TopBar 自身高度的一半。
+    const y = screenHeight / 2 - safeTop - gap - topBarHeight / 2;
     this.topBar.setPosition(new Vec3(0, y, 0));
   }
 
-  private getSafeTopInCocosUnits(screenHeight: number): number {
-    if (!sys.isNative && typeof wx !== 'undefined' && wx.getSystemInfoSync) {
-      try {
-        const info = wx.getSystemInfoSync();
-        const windowHeight = Number(info.windowHeight || 0);
-        const safeAreaTop = Number(info.safeArea?.top || 0);
-        const statusBarHeight = Number(info.statusBarHeight || 0);
-        const topInPx = safeAreaTop > 0 ? safeAreaTop : statusBarHeight;
-
-        if (windowHeight > 0 && topInPx > 0) {
-          return topInPx * (screenHeight / windowHeight);
-        }
-      } catch (error) {
-        console.warn('[HomeLayout] wx.getSystemInfoSync failed', error);
-      }
+  private getWechatTopSafeAreaInCocosUnits(screenHeight: number): number {
+    if (sys.platform !== sys.Platform.WECHAT_GAME || typeof wx === 'undefined') {
+      return 0;
     }
 
-    return 0;
+    try {
+      const info = wx.getSystemInfoSync ? wx.getSystemInfoSync() : null;
+      if (!info) return 0;
+
+      const windowHeight = Number(info.windowHeight || info.screenHeight || 0);
+      if (windowHeight <= 0) return 0;
+
+      // 优先使用微信胶囊按钮底部。不同机型胶囊位置不同，这是顶部 UI 避让最准确的依据。
+      let topSafePx = 0;
+      if (wx.getMenuButtonBoundingClientRect) {
+        const menuRect = wx.getMenuButtonBoundingClientRect();
+        topSafePx = Number(menuRect?.bottom || 0);
+      }
+
+      // 兜底：没有胶囊信息时，使用 safeArea.top 或 statusBarHeight。
+      if (topSafePx <= 0) {
+        topSafePx = Number(info.safeArea?.top || info.statusBarHeight || 0);
+      }
+
+      return topSafePx * (screenHeight / windowHeight);
+    } catch (error) {
+      console.warn('[HomeLayout] failed to read WeChat safe area', error);
+      return 0;
+    }
   }
 
   private getTransform(node: Node): UITransform {
