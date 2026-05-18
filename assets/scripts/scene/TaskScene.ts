@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Node, Button } from 'cc';
+import { _decorator, Component, Label, Node, Button, instantiate, UITransform, Vec3 } from 'cc';
 import { ApiConfig } from '../core/ApiConfig';
 import { TaskManager, TaskModel } from '../manager/TaskManager';
 import { UserManager } from '../manager/UserManager';
@@ -7,13 +7,23 @@ const { ccclass, property } = _decorator;
 
 @ccclass('TaskScene')
 export class TaskScene extends Component {
-  @property([Node])
-  taskItems: Node[] = [];
+  @property(Node)
+  content: Node | null = null;
+
+  @property(Node)
+  taskItemTemplate: Node | null = null;
 
   @property(Label)
   statusLabel: Label | null = null;
 
+  @property
+  itemGap = 20;
+
   protected async start(): Promise<void> {
+    if (this.taskItemTemplate) {
+      this.taskItemTemplate.active = false;
+    }
+
     await this.loadTasks();
   }
 
@@ -42,13 +52,33 @@ export class TaskScene extends Component {
   }
 
   private renderTasks(): void {
+    if (!this.content || !this.taskItemTemplate) {
+      this.setStatus('任务列表节点未绑定');
+      return;
+    }
+
+    this.content.removeAllChildren();
+
     const tasks = TaskManager.tasks;
+    const templateTransform = this.taskItemTemplate.getComponent(UITransform);
+    const itemHeight = templateTransform?.height || 150;
+    const totalHeight = tasks.length > 0
+      ? tasks.length * itemHeight + Math.max(tasks.length - 1, 0) * this.itemGap
+      : 0;
 
-    this.taskItems.forEach((item, index) => {
-      const task = tasks[index];
-      item.active = !!task;
+    const contentTransform = this.content.getComponent(UITransform);
+    if (contentTransform) {
+      contentTransform.setContentSize(contentTransform.width, totalHeight);
+    }
 
-      if (!task) return;
+    tasks.forEach((task, index) => {
+      const item = instantiate(this.taskItemTemplate!);
+      item.name = `TaskItem_${task.id}`;
+      item.active = true;
+      item.parent = this.content!;
+
+      const y = -itemHeight / 2 - index * (itemHeight + this.itemGap);
+      item.setPosition(new Vec3(0, y, 0));
 
       this.renderTaskItem(item, task);
     });
