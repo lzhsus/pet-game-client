@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Node, Button, instantiate, UITransform, Vec3 } from 'cc';
+import { _decorator, Component, Label, Node, Button, Sprite, SpriteFrame, instantiate, UITransform, Vec3 } from 'cc';
 import { ApiConfig } from '../core/ApiConfig';
 import { TaskManager, TaskModel } from '../manager/TaskManager';
 import { UserManager } from '../manager/UserManager';
@@ -15,6 +15,14 @@ export class TaskScene extends Component {
 
   @property(Label)
   statusLabel: Label | null = null;
+
+  // 未完成 / 可领取按钮背景：task-btn-02
+  @property(SpriteFrame)
+  taskButtonActiveSprite: SpriteFrame | null = null;
+
+  // 已完成按钮背景：task-btn-01
+  @property(SpriteFrame)
+  taskButtonDoneSprite: SpriteFrame | null = null;
 
   @property
   itemGap = 20;
@@ -98,14 +106,33 @@ export class TaskScene extends Component {
     }
 
     if (button) {
+      // 只有“领取”状态可以点击；“去完成”和“已完成”都不能领取。
       button.interactable = task.status === 1;
     }
+
+    this.setButtonSprite(buttonNode, task.status);
 
     if (buttonNode) {
       buttonNode.off(Button.EventType.CLICK);
       buttonNode.on(Button.EventType.CLICK, () => {
         void this.receiveTask(task.id);
       }, this);
+    }
+  }
+
+  private setButtonSprite(buttonNode: Node | undefined, status: number): void {
+    if (!buttonNode) return;
+
+    const sprite = buttonNode.getComponent(Sprite);
+    if (!sprite) return;
+
+    if (status === 2 && this.taskButtonDoneSprite) {
+      sprite.spriteFrame = this.taskButtonDoneSprite;
+      return;
+    }
+
+    if (this.taskButtonActiveSprite) {
+      sprite.spriteFrame = this.taskButtonActiveSprite;
     }
   }
 
@@ -125,7 +152,7 @@ export class TaskScene extends Component {
 
   private getButtonText(task: TaskModel): string {
     if (task.status === 1) return '领取';
-    if (task.status === 2) return '已领取';
+    if (task.status === 2) return '已完成';
     return '去完成';
   }
 
