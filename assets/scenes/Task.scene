@@ -3669,7 +3669,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -425,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -3840,7 +3840,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 220,
+      "width": 650,
       "height": 400
     },
     "_anchorPoint": {
@@ -3993,9 +3993,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 0,
+      "g": 0,
+      "b": 0,
       "a": 255
     },
     "_string": "label",
@@ -4062,7 +4062,7 @@
         "__id__": 107
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 114
@@ -4074,8 +4074,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": 5.298,
+      "y": -720.48,
       "z": 0
     },
     "_lrot": {
@@ -4122,8 +4122,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -189.408,
-      "y": 14.797,
+      "x": -280,
+      "y": 40,
       "z": 0
     },
     "_lrot": {
@@ -4161,12 +4161,12 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 42.255859375,
+      "width": 99.572265625,
       "height": 50.4
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_id": "7aBMA6BhNCwb5Rrh9XpsAP"
@@ -4186,16 +4186,16 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 61,
+      "g": 40,
+      "b": 27,
       "a": 255
     },
-    "_string": "label",
-    "_horizontalAlign": 1,
+    "_string": "卫视1次",
+    "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 20,
-    "_fontSize": 20,
+    "_actualFontSize": 28,
+    "_fontSize": 28,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -4204,7 +4204,7 @@
     "_isSystemFontUsed": true,
     "_spacingX": 0,
     "_isItalic": false,
-    "_isBold": false,
+    "_isBold": true,
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
@@ -4254,8 +4254,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -280,
+      "y": -26.951,
       "z": 0
     },
     "_lrot": {
@@ -4298,7 +4298,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_id": "18WeCaGuJGgLmhFlzGqVUQ"
@@ -4386,7 +4386,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": -280,
       "y": 0,
       "z": 0
     },
@@ -4425,12 +4425,12 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 42.255859375,
-      "height": 50.4
+      "width": 240.8505859375,
+      "height": 30.240000000000002
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_id": "298/zQFq5JDLL5ns1KgaDv"
@@ -4450,18 +4450,18 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 155,
+      "g": 106,
+      "b": 66,
       "a": 255
     },
-    "_string": "label",
-    "_horizontalAlign": 1,
+    "_string": "奖励：金币 +20  经验 +5",
+    "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 20,
-    "_fontSize": 20,
+    "_actualFontSize": 22,
+    "_fontSize": 22,
     "_fontFamily": "Arial",
-    "_lineHeight": 40,
+    "_lineHeight": 24,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": null,
@@ -4525,8 +4525,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": 226.385,
+      "y": 16.17,
       "z": 0
     },
     "_lrot": {
@@ -4637,12 +4637,12 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
-    "_string": "button",
+    "_string": "领 取",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
@@ -4655,7 +4655,7 @@
     "_isSystemFontUsed": true,
     "_spacingX": 0,
     "_isItalic": false,
-    "_isBold": false,
+    "_isBold": true,
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
@@ -4727,7 +4727,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "3b37c813-951f-45b3-8129-830d84f6b379@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -4757,7 +4757,7 @@
     "__prefab": null,
     "clickEvents": [],
     "_interactable": true,
-    "_transition": 2,
+    "_transition": 3,
     "_normalColor": {
       "__type__": "cc.Color",
       "r": 214,
@@ -4786,22 +4786,10 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "_hoverSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "_pressedSprite": {
-      "__uuid__": "544e49d6-3f05-4fa8-9a9e-091f98fc2ce8@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "_disabledSprite": {
-      "__uuid__": "951249e0-9f16-456d-8b85-a6ca954da16b@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_normalSprite": null,
+    "_hoverSprite": null,
+    "_pressedSprite": null,
+    "_disabledSprite": null,
     "_duration": 0.1,
     "_zoomScale": 1.2,
     "_target": {
@@ -7864,20 +7852,16 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "taskItems": [
-      {
-        "__id__": 18
-      },
-      {
-        "__id__": 37
-      },
-      {
-        "__id__": 56
-      }
-    ],
+    "content": {
+      "__id__": 86
+    },
+    "taskItemTemplate": {
+      "__id__": 97
+    },
     "statusLabel": {
       "__id__": 96
     },
+    "itemGap": 0,
     "_id": "40rMRS0P1FYYvS9uhW5k/D"
   },
   {
