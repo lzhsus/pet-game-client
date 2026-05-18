@@ -5,6 +5,7 @@ import { TaskManager } from '../manager/TaskManager';
 import { BagManager } from '../manager/BagManager';
 import { ShopManager } from '../manager/ShopManager';
 import { RewardManager } from '../manager/RewardManager';
+import { GameToast } from '../ui/GameToast';
 
 const { ccclass, property } = _decorator;
 
@@ -21,9 +22,6 @@ export class HomeScene extends Component {
 
   @property(Label)
   petInfoLabel: Label | null = null;
-
-  @property(Label)
-  statusLabel: Label | null = null;
 
   @property(Node)
   hungerBarFill: Node | null = null;
@@ -50,7 +48,7 @@ export class HomeScene extends Component {
 
   private async initGame(): Promise<void> {
     try {
-      this.setStatus('连接服务器中...');
+      GameToast.show('连接服务器中...');
       await UserManager.login();
       await UserManager.getInfo();
       await PetManager.getInfo();
@@ -58,10 +56,10 @@ export class HomeScene extends Component {
       await BagManager.list();
       await ShopManager.list();
       this.refreshView();
-      this.setStatus('服务器连接成功');
+      GameToast.showSuccess('服务器连接成功');
     } catch (error) {
       console.error(error);
-      this.setStatus(error instanceof Error ? error.message : '连接失败');
+      GameToast.showError(error instanceof Error ? error.message : '连接失败');
     }
   }
 
@@ -79,35 +77,40 @@ export class HomeScene extends Component {
   
   public async onClickDailySign(): Promise<void> {
     try {
-      this.setStatus('签到中...');
+      GameToast.show('签到中...');
       const reward = await RewardManager.dailySign();
       await UserManager.getInfo();
+      await TaskManager.list();
       this.refreshView();
-      this.setStatus(reward.message || '签到完成');
+      GameToast.showSuccess(reward.message || '签到完成');
     } catch (error) {
       console.error(error);
-      this.setStatus(error instanceof Error ? error.message : '签到失败');
+      GameToast.showError(error instanceof Error ? error.message : '签到失败');
     }
   }
 
   public async onClickRefresh(): Promise<void> {
-    await this.refreshRemoteData();
+    await this.refreshRemoteData(true);
   }
 
-  private async refreshRemoteData(): Promise<void> {
+  private async refreshRemoteData(showToast = false): Promise<void> {
     try {
       await UserManager.getInfo();
       await PetManager.getInfo();
       this.refreshView();
+
+      if (showToast) {
+        GameToast.showSuccess('刷新成功');
+      }
     } catch (error) {
       console.error(error);
-      this.setStatus(error instanceof Error ? error.message : '刷新失败');
+      GameToast.showError(error instanceof Error ? error.message : '刷新失败');
     }
   }
 
   private async runPetAction(type: 'feed' | 'bath' | 'play', message: string): Promise<void> {
     try {
-      this.setStatus('操作中...');
+      GameToast.show('操作中...');
 
       if (type === 'feed') {
         await PetManager.feed();
@@ -122,13 +125,14 @@ export class HomeScene extends Component {
       }
 
       await UserManager.getInfo();
+      await PetManager.getInfo();
       await TaskManager.list();
       await BagManager.list();
       this.refreshView();
-      this.setStatus(message);
+      GameToast.showSuccess(message);
     } catch (error) {
       console.error(error);
-      this.setStatus(error instanceof Error ? error.message : '操作失败');
+      GameToast.showError(error instanceof Error ? error.message : '操作失败');
     }
   }
 
@@ -170,11 +174,5 @@ export class HomeScene extends Component {
 
     const percent = Math.max(0, Math.min(100, Number(value) || 0)) / 100;
     transform.setContentSize(this.statusBarMaxWidth * percent, transform.height);
-  }
-
-  private setStatus(message: string): void {
-    if (this.statusLabel) {
-      this.statusLabel.string = message;
-    }
   }
 }
