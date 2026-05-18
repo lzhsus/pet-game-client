@@ -1,6 +1,8 @@
-import { _decorator, Component, director, Node } from 'cc';
+import { _decorator, Component, director, Node, sys, UITransform, view, Vec3 } from 'cc';
 
 const { ccclass, property } = _decorator;
+
+declare const wx: any;
 
 type TabName = 'Home' | 'Task' | 'Bag' | 'Shop' | 'Sign';
 
@@ -22,13 +24,28 @@ export class BottomNav extends Component {
   signButton: Node | null = null;
 
   // 当前页面对应的 tab。
-  // 如果你的场景名不是 Home / Task / Bag / Shop / Sign，直接在 Cocos 里手动填写这个字段。
-  // 例如：任务页填 Task，背包页填 Bag。
   @property
   activeTab = '';
 
+  // 设计稿高度，用来做比例换算。
+  @property
+  designHeight = 1600;
+
+  // BottomNav 和底部安全区之间的额外距离。
+  @property
+  bottomGap = 24;
+
+  protected onLoad(): void {
+    this.applyLayout();
+    view.on('canvas-resize', this.applyLayout, this);
+  }
+
   protected start(): void {
     this.refreshActiveTab();
+  }
+
+  protected onDestroy(): void {
+    view.off('canvas-resize', this.applyLayout, this);
   }
 
   public onClickHome(): void {
@@ -49,6 +66,20 @@ export class BottomNav extends Component {
 
   public onClickSign(): void {
     this.goScene('Sign');
+  }
+
+  private applyLayout(): void {
+    const visibleSize = view.getVisibleSize();
+    const screenHeight = visibleSize.height;
+    const scaleY = screenHeight / this.designHeight;
+    const safeBottom = this.getWechatBottomSafeArea(screenHeight);
+
+    const transform = this.node.getComponent(UITransform);
+    const navHeight = transform ? transform.height : 0;
+
+    const y = -screenHeight / 2 + safeBottom + this.bottomGap * scaleY + navHeight / 2;
+
+    this.node.setPosition(new Vec3(0, y, 0));
   }
 
   private refreshActiveTab(): void {
@@ -83,6 +114,28 @@ export class BottomNav extends Component {
     const activeBg = button.getChildByName('ActiveBg');
     if (activeBg) {
       activeBg.active = active;
+    }
+  }
+
+  private getWechatBottomSafeArea(screenHeight: number): number {
+    if (sys.platform !== sys.Platform.WECHAT_GAME || typeof wx === 'undefined') {
+      return 0;
+    }
+
+    try {
+      const info = wx.getSystemInfoSync ? wx.getSystemInfoSync() : null;
+      if (!info) return 0;
+
+      const windowHeight = Number(info.windowHeight || info.screenHeight || 0);
+      if (windowHeight <= 0) return 0;
+
+      const safeAreaBottom = Number(info.safeArea?.bottom || windowHeight);
+      const bottomSafePx = Math.max(windowHeight - safeAreaBottom, 0);
+
+      return bottomSafePx * (screenHeight / windowHeight);
+    } catch (error) {
+      console.warn('[BottomNav] failed to read WeChat bottom safe area', error);
+      return 0;
     }
   }
 
