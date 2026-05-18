@@ -102,6 +102,7 @@ export class TaskScene extends Component {
     this.setLabel(item, 'TitleLabel', task.title || '每日任务');
     this.setLabel(item, 'ProgressLabel', `进度：${task.progress}/${task.target_value}`);
     this.setLabel(item, 'RewardLabel', `奖励：金币 +${task.reward_coin}  经验 +${task.reward_exp}`);
+    this.setProgressBar(item, task);
 
     const buttonNode = item.getChildByName('ReceiveButton');
     const buttonLabel = buttonNode?.getChildByName('ButtonLabel')?.getComponent(Label);
@@ -133,6 +134,24 @@ export class TaskScene extends Component {
         });
       }, this);
     }
+  }
+
+  private setProgressBar(item: Node, task: TaskModel): void {
+    const progressBar = item.getChildByName('ProgressBar');
+    const barBg = progressBar?.getChildByName('BarBg');
+    const barFill = progressBar?.getChildByName('BarFill');
+
+    const bgTransform = barBg?.getComponent(UITransform);
+    const fillTransform = barFill?.getComponent(UITransform);
+
+    if (!bgTransform || !fillTransform) return;
+
+    const targetValue = Math.max(Number(task.target_value) || 0, 1);
+    const progress = Math.max(0, Math.min(Number(task.progress) || 0, targetValue));
+    const percent = progress / targetValue;
+    const fillWidth = bgTransform.width * percent;
+
+    fillTransform.setContentSize(fillWidth, fillTransform.height);
   }
 
   private playButtonPress(buttonNode: Node, callback: () => void): void {
