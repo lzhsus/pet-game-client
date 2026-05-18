@@ -4062,7 +4062,7 @@
         "__id__": 107
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 114
@@ -4123,7 +4123,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -280,
-      "y": 40,
+      "y": 50,
       "z": 0
     },
     "_lrot": {
@@ -4255,7 +4255,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -280,
-      "y": -26.951,
+      "y": -30,
       "z": 0
     },
     "_lrot": {
@@ -4293,7 +4293,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 42.255859375,
+      "width": 80,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -4318,12 +4318,12 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 155,
+      "g": 106,
+      "b": 66,
       "a": 255
     },
-    "_string": "label",
+    "_string": "xxxxxxxx",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
@@ -4387,7 +4387,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -280,
-      "y": 0,
+      "y": 6,
       "z": 0
     },
     "_lrot": {
@@ -4845,7 +4845,7 @@
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
