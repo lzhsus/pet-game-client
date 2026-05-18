@@ -76,22 +76,7 @@ export class HomeScene extends Component {
   public async onClickPlay(): Promise<void> {
     await this.runPetAction('play', '玩耍成功');
   }
-
-  onClickHome() {
-  }
-
-  onClickTask() {
-  }
-
-  onClickBag() {
-  }
-
-  onClickShop() {
-  }
-
-  onClickSign() {
-  }
-
+  
   public async onClickDailySign(): Promise<void> {
     try {
       this.setStatus('签到中...');
