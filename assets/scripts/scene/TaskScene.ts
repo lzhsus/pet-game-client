@@ -1,4 +1,5 @@
 import { _decorator, Component, Label, Node, Button } from 'cc';
+import { ApiConfig } from '../core/ApiConfig';
 import { TaskManager, TaskModel } from '../manager/TaskManager';
 import { UserManager } from '../manager/UserManager';
 
@@ -20,8 +21,16 @@ export class TaskScene extends Component {
     await this.loadTasks();
   }
 
+  private async ensureLogin(): Promise<void> {
+    if (ApiConfig.token) return;
+
+    this.setStatus('登录中...');
+    await UserManager.login();
+  }
+
   private async loadTasks(): Promise<void> {
     try {
+      await this.ensureLogin();
       this.setStatus('加载任务中...');
       await TaskManager.list();
       this.renderTasks();
@@ -72,6 +81,7 @@ export class TaskScene extends Component {
 
   private async receiveTask(taskId: number): Promise<void> {
     try {
+      await this.ensureLogin();
       this.setStatus('领取奖励中...');
       await TaskManager.receive(taskId);
       await UserManager.getInfo();
