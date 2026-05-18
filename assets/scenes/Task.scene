@@ -4062,7 +4062,7 @@
         "__id__": 107
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 114
@@ -7860,6 +7860,14 @@
     },
     "statusLabel": {
       "__id__": 96
+    },
+    "taskButtonActiveSprite": {
+      "__uuid__": "3b37c813-951f-45b3-8129-830d84f6b379@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "taskButtonDoneSprite": {
+      "__uuid__": "3a645532-5f29-412d-b789-3eb8587f7f60@f9941",
+      "__expectedType__": "cc.SpriteFrame"
     },
     "itemGap": 0,
     "_id": "40rMRS0P1FYYvS9uhW5k/D"

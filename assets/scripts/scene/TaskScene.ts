@@ -25,7 +25,7 @@ export class TaskScene extends Component {
   taskButtonDoneSprite: SpriteFrame | null = null;
 
   @property
-  itemGap = 20;
+  itemGap = 0;
 
   protected async start(): Promise<void> {
     if (this.taskItemTemplate) {
