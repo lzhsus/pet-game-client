@@ -129,11 +129,16 @@ export class TaskScene extends Component {
           }
 
           if (task.status === 0) {
-            director.loadScene('Home');
+            director.loadScene(this.getTaskTargetScene(task));
           }
         });
       }, this);
     }
+  }
+
+  private getTaskTargetScene(task: TaskModel): string {
+    if (task.task_type === 'sign') return 'Sign';
+    return 'Home';
   }
 
   private setProgressBar(item: Node, task: TaskModel): void {
