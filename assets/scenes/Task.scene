@@ -3253,8 +3253,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 718,
-      "height": 176
+      "width": 750,
+      "height": 120
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3289,6 +3289,8 @@
       "__id__": 70
     },
     "activeTab": "Task",
+    "designHeight": 1600,
+    "bottomGap": 24,
     "_id": "b4fRVDz/FJ07dzJ6m4ohSF"
   },
   {
@@ -3676,11 +3678,9 @@
     "PageTop": {
       "__id__": 8
     },
-    "BottomNav": null,
     "designWidth": 750,
     "designHeight": 1600,
     "topGap": 0,
-    "bottomNavGap": 24,
     "_id": "57ihClYfRF1beIDq4Woq4n"
   },
   {

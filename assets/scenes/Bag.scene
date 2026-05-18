@@ -3289,6 +3289,8 @@
       "__id__": 70
     },
     "activeTab": "Bag",
+    "designHeight": 1600,
+    "bottomGap": 24,
     "_id": "461KPyxqJGPZzTDWICH7Yz"
   },
   {
@@ -3676,11 +3678,9 @@
     "PageTop": {
       "__id__": 8
     },
-    "BottomNav": null,
     "designWidth": 750,
     "designHeight": 1600,
     "topGap": 0,
-    "bottomNavGap": 24,
     "_id": "57ihClYfRF1beIDq4Woq4n"
   },
   {
