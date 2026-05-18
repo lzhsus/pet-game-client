@@ -2,6 +2,7 @@ import { _decorator, Component, Label, Node, Button, Sprite, SpriteFrame, instan
 import { ApiConfig } from '../core/ApiConfig';
 import { TaskManager, TaskModel } from '../manager/TaskManager';
 import { UserManager } from '../manager/UserManager';
+import { GameToast } from '../ui/GameToast';
 
 const { ccclass, property } = _decorator;
 
@@ -12,9 +13,6 @@ export class TaskScene extends Component {
 
   @property(Node)
   taskItemTemplate: Node | null = null;
-
-  @property(Label)
-  statusLabel: Label | null = null;
 
   // 未完成 / 可领取按钮背景：task-btn-02
   @property(SpriteFrame)
@@ -38,36 +36,38 @@ export class TaskScene extends Component {
       this.taskItemTemplate.active = false;
     }
 
-    await this.loadTasks();
+    await this.loadTasks(false);
   }
 
   public async onClickRefresh(): Promise<void> {
-    await this.loadTasks();
+    await this.loadTasks(true);
   }
 
   private async ensureLogin(): Promise<void> {
     if (ApiConfig.token) return;
 
-    this.setStatus('登录中...');
+    GameToast.show('登录中...');
     await UserManager.login();
   }
 
-  private async loadTasks(): Promise<void> {
+  private async loadTasks(showSuccessToast = false): Promise<void> {
     try {
       await this.ensureLogin();
-      this.setStatus('加载任务中...');
       await TaskManager.list();
       this.renderTasks();
-      this.setStatus('每日任务已更新');
+
+      if (showSuccessToast) {
+        GameToast.showSuccess('每日任务已更新');
+      }
     } catch (error) {
       console.error(error);
-      this.setStatus(error instanceof Error ? error.message : '任务加载失败');
+      GameToast.showError(error instanceof Error ? error.message : '任务加载失败');
     }
   }
 
   private renderTasks(): void {
     if (!this.content || !this.taskItemTemplate) {
-      this.setStatus('任务列表节点未绑定');
+      GameToast.showError('任务列表节点未绑定');
       return;
     }
 
@@ -187,14 +187,13 @@ export class TaskScene extends Component {
   private async receiveTask(taskId: number): Promise<void> {
     try {
       await this.ensureLogin();
-      this.setStatus('领取奖励中...');
       await TaskManager.receive(taskId);
       await UserManager.getInfo();
       this.renderTasks();
-      this.setStatus('奖励领取成功');
+      GameToast.showSuccess('奖励领取成功');
     } catch (error) {
       console.error(error);
-      this.setStatus(error instanceof Error ? error.message : '领取失败');
+      GameToast.showError(error instanceof Error ? error.message : '领取失败');
     }
   }
 
@@ -208,12 +207,6 @@ export class TaskScene extends Component {
     const label = root.getChildByName(childName)?.getComponent(Label);
     if (label) {
       label.string = value;
-    }
-  }
-
-  private setStatus(message: string): void {
-    if (this.statusLabel) {
-      this.statusLabel.string = message;
     }
   }
 }
