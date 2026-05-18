@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Node, Button, Sprite, SpriteFrame, instantiate, UITransform, Vec3 } from 'cc';
+import { _decorator, Component, Label, Node, Button, Sprite, SpriteFrame, instantiate, UITransform, Vec3, tween, director } from 'cc';
 import { ApiConfig } from '../core/ApiConfig';
 import { TaskManager, TaskModel } from '../manager/TaskManager';
 import { UserManager } from '../manager/UserManager';
@@ -26,6 +26,12 @@ export class TaskScene extends Component {
 
   @property
   itemGap = 0;
+
+  @property
+  pressScale = 1.2;
+
+  @property
+  pressDuration = 0.1;
 
   protected async start(): Promise<void> {
     if (this.taskItemTemplate) {
@@ -106,8 +112,8 @@ export class TaskScene extends Component {
     }
 
     if (button) {
-      // 只有“领取”状态可以点击；“去完成”和“已完成”都不能领取。
-      button.interactable = task.status === 1;
+      // 去完成、领取可点击；已完成不可点击。
+      button.interactable = task.status !== 2;
     }
 
     this.setButtonSprite(buttonNode, task.status);
@@ -115,9 +121,27 @@ export class TaskScene extends Component {
     if (buttonNode) {
       buttonNode.off(Button.EventType.CLICK);
       buttonNode.on(Button.EventType.CLICK, () => {
-        void this.receiveTask(task.id);
+        this.playButtonPress(buttonNode, () => {
+          if (task.status === 1) {
+            void this.receiveTask(task.id);
+            return;
+          }
+
+          if (task.status === 0) {
+            director.loadScene('Home');
+          }
+        });
       }, this);
     }
+  }
+
+  private playButtonPress(buttonNode: Node, callback: () => void): void {
+    tween(buttonNode)
+      .stop()
+      .to(this.pressDuration, { scale: new Vec3(this.pressScale, this.pressScale, 1) })
+      .to(this.pressDuration, { scale: Vec3.ONE })
+      .call(callback)
+      .start();
   }
 
   private setButtonSprite(buttonNode: Node | undefined, status: number): void {
