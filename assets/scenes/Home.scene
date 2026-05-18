@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 216
+      "__id__": 215
     },
     "_id": "296060af-b944-4124-901f-9c508c56368b"
   },
@@ -93,7 +93,7 @@
         "__id__": 213
       },
       {
-        "__id__": 215
+        "__id__": 214
       }
     ],
     "_prefab": null,
@@ -7883,7 +7883,7 @@
         "__id__": 206
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 209
@@ -8265,9 +8265,6 @@
     "petInfoLabel": {
       "__id__": 40
     },
-    "statusLabel": {
-      "__id__": 214
-    },
     "hungerBarFill": {
       "__id__": 54
     },
@@ -8279,66 +8276,6 @@
     },
     "statusBarMaxWidth": 100,
     "_id": "d8Evi9oSBF96EQS1SODblv"
-  },
-  {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": null,
-    "_enabled": true,
-    "__prefab": null,
-    "_customMaterial": null,
-    "_srcBlendFactor": 2,
-    "_dstBlendFactor": 4,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 182,
-      "g": 72,
-      "b": 12,
-      "a": 255
-    },
-    "_string": "准备连接服务器...",
-    "_horizontalAlign": 1,
-    "_verticalAlign": 1,
-    "_actualFontSize": 24,
-    "_fontSize": 24,
-    "_fontFamily": "Arial",
-    "_lineHeight": 40,
-    "_overflow": 0,
-    "_enableWrapText": true,
-    "_font": null,
-    "_isSystemFontUsed": true,
-    "_spacingX": 0,
-    "_isItalic": false,
-    "_isBold": true,
-    "_isUnderline": false,
-    "_underlineHeight": 2,
-    "_cacheMode": 0,
-    "_enableOutline": false,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_outlineWidth": 2,
-    "_enableShadow": false,
-    "_shadowColor": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": 2
-    },
-    "_shadowBlur": 2,
-    "_id": "0fz7sMKKNKeJY7dUIYT2qu"
   },
   {
     "__type__": "07c01jQfWFHI4mSwx8gFO8T",
@@ -8364,28 +8301,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 217
+      "__id__": 216
     },
     "shadows": {
-      "__id__": 218
+      "__id__": 217
     },
     "_skybox": {
-      "__id__": 219
+      "__id__": 218
     },
     "fog": {
-      "__id__": 220
+      "__id__": 219
     },
     "octree": {
-      "__id__": 221
+      "__id__": 220
     },
     "skin": {
-      "__id__": 222
+      "__id__": 221
     },
     "lightProbeInfo": {
-      "__id__": 223
+      "__id__": 222
     },
     "postSettings": {
-      "__id__": 224
+      "__id__": 223
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

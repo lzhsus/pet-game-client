@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 212
+      "__id__": 211
     },
     "_id": "59948f64-34f3-4bc8-9466-e54188729e1b"
   },
@@ -7962,7 +7962,7 @@
         "__id__": 202
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 205
@@ -8359,9 +8359,6 @@
     "taskItemTemplate": {
       "__id__": 171
     },
-    "statusLabel": {
-      "__id__": 211
-    },
     "taskButtonActiveSprite": {
       "__uuid__": "3b37c813-951f-45b3-8129-830d84f6b379@f9941",
       "__expectedType__": "cc.SpriteFrame"
@@ -8376,90 +8373,30 @@
     "_id": "40rMRS0P1FYYvS9uhW5k/D"
   },
   {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": null,
-    "_enabled": true,
-    "__prefab": null,
-    "_customMaterial": null,
-    "_srcBlendFactor": 2,
-    "_dstBlendFactor": 4,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_string": "label",
-    "_horizontalAlign": 1,
-    "_verticalAlign": 1,
-    "_actualFontSize": 20,
-    "_fontSize": 20,
-    "_fontFamily": "Arial",
-    "_lineHeight": 40,
-    "_overflow": 0,
-    "_enableWrapText": true,
-    "_font": null,
-    "_isSystemFontUsed": true,
-    "_spacingX": 0,
-    "_isItalic": false,
-    "_isBold": false,
-    "_isUnderline": false,
-    "_underlineHeight": 2,
-    "_cacheMode": 0,
-    "_enableOutline": false,
-    "_outlineColor": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_outlineWidth": 2,
-    "_enableShadow": false,
-    "_shadowColor": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_shadowOffset": {
-      "__type__": "cc.Vec2",
-      "x": 2,
-      "y": 2
-    },
-    "_shadowBlur": 2,
-    "_id": "33NUUAE+hMdZogEe8xrh9n"
-  },
-  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 213
+      "__id__": 212
     },
     "shadows": {
-      "__id__": 214
+      "__id__": 213
     },
     "_skybox": {
-      "__id__": 215
+      "__id__": 214
     },
     "fog": {
-      "__id__": 216
+      "__id__": 215
     },
     "octree": {
-      "__id__": 217
+      "__id__": 216
     },
     "skin": {
-      "__id__": 218
+      "__id__": 217
     },
     "lightProbeInfo": {
-      "__id__": 219
+      "__id__": 218
     },
     "postSettings": {
-      "__id__": 220
+      "__id__": 219
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
