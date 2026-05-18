@@ -8010,7 +8010,7 @@
       "r": 0,
       "g": 0,
       "b": 0,
-      "a": 60
+      "a": 80
     },
     "_spriteFrame": {
       "__uuid__": "7d8f9b89-4fd1-4c9f-a3ab-38ec7cded7ca@f9941",
@@ -8203,6 +8203,7 @@
     },
     "showDuration": 1.5,
     "fadeDuration": 0.15,
+    "maxQueueCount": 3,
     "_id": "69DjBBeNtBYYn2Pff2rpy3"
   },
   {
