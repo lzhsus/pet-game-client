@@ -58,12 +58,7 @@ export class HomeLayout extends Component {
     private layoutBg(screenWidth: number, screenHeight: number): void {
         if (!this.bg) return;
 
-        // 背景铺满当前设备可视区域。
-        const transform = this.bg.getComponent(UITransform);
-        if (transform) {
-            transform.setContentSize(screenWidth, screenHeight);
-        }
-        this.bg.setPosition(new Vec3(0, 0, 0));
+        this.bg.setPosition(new Vec3(0, screenHeight/2, 0));
     }
 
     private layoutPageTop(screenHeight: number, safeTop: number, scaleY: number): void {
