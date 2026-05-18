@@ -2,6 +2,8 @@ import { _decorator, Component, director, Node } from 'cc';
 
 const { ccclass, property } = _decorator;
 
+type TabName = 'Home' | 'Task' | 'Bag' | 'Shop' | 'Sign';
+
 @ccclass('BottomNav')
 export class BottomNav extends Component {
   @property(Node)
@@ -18,6 +20,12 @@ export class BottomNav extends Component {
 
   @property(Node)
   signButton: Node | null = null;
+
+  // 当前页面对应的 tab。
+  // 如果你的场景名不是 Home / Task / Bag / Shop / Sign，直接在 Cocos 里手动填写这个字段。
+  // 例如：任务页填 Task，背包页填 Bag。
+  @property
+  activeTab = '';
 
   protected start(): void {
     this.refreshActiveTab();
@@ -45,19 +53,33 @@ export class BottomNav extends Component {
 
   private refreshActiveTab(): void {
     const currentSceneName = director.getScene()?.name || 'Home';
+    const activeTab = this.getActiveTab(currentSceneName);
 
-    this.setTabActive(this.homeButton, currentSceneName === 'Home');
-    this.setTabActive(this.taskButton, currentSceneName === 'Task');
-    this.setTabActive(this.bagButton, currentSceneName === 'Bag');
-    this.setTabActive(this.shopButton, currentSceneName === 'Shop');
-    this.setTabActive(this.signButton, currentSceneName === 'Sign');
+    this.setTabActive(this.homeButton, activeTab === 'Home');
+    this.setTabActive(this.taskButton, activeTab === 'Task');
+    this.setTabActive(this.bagButton, activeTab === 'Bag');
+    this.setTabActive(this.shopButton, activeTab === 'Shop');
+    this.setTabActive(this.signButton, activeTab === 'Sign');
+  }
+
+  private getActiveTab(sceneName: string): TabName {
+    const tab = this.activeTab.trim();
+
+    if (tab === 'Home' || tab === 'Task' || tab === 'Bag' || tab === 'Shop' || tab === 'Sign') {
+      return tab;
+    }
+
+    if (sceneName.includes('Task')) return 'Task';
+    if (sceneName.includes('Bag')) return 'Bag';
+    if (sceneName.includes('Shop')) return 'Shop';
+    if (sceneName.includes('Sign')) return 'Sign';
+
+    return 'Home';
   }
 
   private setTabActive(button: Node | null, active: boolean): void {
     if (!button) return;
 
-    // 约定：每个按钮下面放一个名为 ActiveBg 的背景节点。
-    // 当前场景对应的按钮显示 ActiveBg，其他按钮隐藏 ActiveBg。
     const activeBg = button.getChildByName('ActiveBg');
     if (activeBg) {
       activeBg.active = active;
