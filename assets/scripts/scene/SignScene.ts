@@ -109,7 +109,7 @@ export class SignScene extends Component {
       sprite.spriteFrame = this.missedSprite;
       return;
     }
-
+console.log(this.normalSprite)
     if (this.normalSprite) {
       sprite.spriteFrame = this.normalSprite;
     }
