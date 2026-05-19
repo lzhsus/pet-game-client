@@ -5,10 +5,18 @@ import { BagManager } from './BagManager';
 export interface GoodsModel {
   id: number;
   goods_name: string;
-  goods_type: string;
+  goods_type: 'food' | 'clean' | 'toy' | string;
+  description: string;
   price_coin: number;
   price_diamond: number;
+  item_count: number;
+  hunger_value: number;
+  clean_value: number;
+  mood_value: number;
+  exp_value: number;
+  icon: string;
   status: number;
+  sort: number;
 }
 
 export class ShopManager {
@@ -27,12 +35,13 @@ export class ShopManager {
     return this.goods;
   }
 
-  static async buy(goodsId: number): Promise<void> {
+  static async buy(goodsId: number): Promise<string> {
     const res = await Http.post<{
       success: boolean;
       message: string;
       goods: GoodsModel;
       user?: any;
+      bag?: any[];
     }>('/api/shop/buy', {
       goods_id: goodsId,
     });
@@ -52,5 +61,7 @@ export class ShopManager {
     }
 
     await BagManager.list();
+
+    return res.data.message || '购买成功';
   }
 }
