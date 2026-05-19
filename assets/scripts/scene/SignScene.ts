@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, Label, Node, Sprite, SpriteFrame, tween, Vec3 } from 'cc';
+import { _decorator, Button, Color, Component, Label, Node, Sprite, SpriteFrame, tween, Vec3 } from 'cc';
 import { ApiConfig } from '../core/ApiConfig';
 import { RewardManager, WeekSignDay } from '../manager/RewardManager';
 import { UserManager } from '../manager/UserManager';
@@ -32,6 +32,9 @@ export class SignScene extends Component {
 
   @property
   pressDuration = 0.1;
+
+  private readonly whiteTextColor = new Color(255, 255, 255, 255);
+  private readonly normalTextColor = new Color(127, 73, 35, 255);
 
   protected async start(): Promise<void> {
     await this.loadWeekSign();
@@ -92,6 +95,9 @@ export class SignScene extends Component {
     this.setLabel(dayNode, 'DayLabel', `第 ${item.day_no} 天`);
     this.setLabel(dayNode, 'RewardLabel', `+${item.reward_coin}`);
 
+    const isMissed = !item.signed && !item.is_today && !item.is_future;
+    this.setDayTextColor(dayNode, item.signed || isMissed ? this.whiteTextColor : this.normalTextColor);
+
     const bgSprite = dayNode.getChildByName('Bg')?.getComponent(Sprite);
     if (!bgSprite) return;
 
@@ -100,7 +106,7 @@ export class SignScene extends Component {
       return;
     }
 
-    if (!item.signed && !item.is_today && !item.is_future && this.missedSprite) {
+    if (isMissed && this.missedSprite) {
       bgSprite.spriteFrame = this.missedSprite;
       return;
     }
@@ -128,6 +134,18 @@ export class SignScene extends Component {
     const label = root.getChildByName(childName)?.getComponent(Label);
     if (label) {
       label.string = value;
+    }
+  }
+
+  private setDayTextColor(root: Node, color: Color): void {
+    const dayLabel = root.getChildByName('DayLabel')?.getComponent(Label);
+    if (dayLabel) {
+      dayLabel.color = color;
+    }
+
+    const rewardLabel = root.getChildByName('RewardLabel')?.getComponent(Label);
+    if (rewardLabel) {
+      rewardLabel.color = color;
     }
   }
 
