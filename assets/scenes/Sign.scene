@@ -8292,10 +8292,46 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "dayNodes": [],
+    "dayNodes": [
+      {
+        "__id__": 23
+      },
+      {
+        "__id__": 34
+      },
+      {
+        "__id__": 45
+      },
+      {
+        "__id__": 56
+      },
+      {
+        "__id__": 67
+      },
+      {
+        "__id__": 78
+      },
+      {
+        "__id__": 89
+      }
+    ],
     "signButton": {
       "__id__": 100
     },
+    "signedSprite": {
+      "__uuid__": "fd979e4c-07a3-4f2c-a70b-7418b569c407@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "todaySprite": {
+      "__uuid__": "b224a1a3-0430-4b79-9fba-fb4ac554aa05@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "normalSprite": {
+      "__uuid__": "45e95b97-4b8f-409c-b2b8-c6caf57df6b2@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "pressScale": 1.08,
+    "pressDuration": 0.1,
     "_id": "35itrGjAFOIYmNo/Hj7W0i"
   },
   {
