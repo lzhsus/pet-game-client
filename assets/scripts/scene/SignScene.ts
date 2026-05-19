@@ -92,11 +92,6 @@ export class SignScene extends Component {
     this.setLabel(dayNode, 'DayLabel', `第 ${item.day_no} 天`);
     this.setLabel(dayNode, 'RewardLabel', `+${item.reward_coin}`);
 
-    const receivedMask = dayNode.getChildByName('ReceivedMask');
-    if (receivedMask) {
-      receivedMask.active = item.signed;
-    }
-
     const sprite = dayNode.getComponent(Sprite);
     if (!sprite) return;
 
@@ -109,7 +104,7 @@ export class SignScene extends Component {
       sprite.spriteFrame = this.missedSprite;
       return;
     }
-console.log(this.normalSprite)
+
     if (this.normalSprite) {
       sprite.spriteFrame = this.normalSprite;
     }
