@@ -1,4 +1,5 @@
 import { _decorator, Button, Component, Label, Node, Sprite, SpriteFrame, tween, Vec3 } from 'cc';
+import { ApiConfig } from '../core/ApiConfig';
 import { RewardManager, WeekSignDay } from '../manager/RewardManager';
 import { UserManager } from '../manager/UserManager';
 import { TaskManager } from '../manager/TaskManager';
@@ -36,8 +37,16 @@ export class SignScene extends Component {
     await this.loadWeekSign();
   }
 
+  private async ensureLogin(): Promise<void> {
+    if (ApiConfig.token) return;
+
+    GameToast.show('登录中...');
+    await UserManager.login();
+  }
+
   private async loadWeekSign(): Promise<void> {
     try {
+      await this.ensureLogin();
       await RewardManager.getWeekSign();
       this.refreshView();
     } catch (error) {
@@ -52,6 +61,7 @@ export class SignScene extends Component {
     }
 
     try {
+      await this.ensureLogin();
       const reward = await RewardManager.dailySign();
 
       await UserManager.getInfo();
