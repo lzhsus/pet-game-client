@@ -1,6 +1,6 @@
 import { _decorator, Component, Label, Node, UITransform } from 'cc';
 import { UserManager } from '../manager/UserManager';
-import { PetManager } from '../manager/PetManager';
+import { PetActionResult, PetManager } from '../manager/PetManager';
 import { TaskManager } from '../manager/TaskManager';
 import { BagManager } from '../manager/BagManager';
 import { ShopManager } from '../manager/ShopManager';
@@ -62,15 +62,15 @@ export class HomeScene extends Component {
   }
 
   public async onClickFeed(): Promise<void> {
-    await this.runPetAction('feed', '喂食成功');
+    await this.runPetAction('feed');
   }
 
   public async onClickBath(): Promise<void> {
-    await this.runPetAction('bath', '洗澡成功');
+    await this.runPetAction('bath');
   }
 
   public async onClickPlay(): Promise<void> {
-    await this.runPetAction('play', '玩耍成功');
+    await this.runPetAction('play');
   }
   
   public async onClickDailySign(): Promise<void> {
@@ -105,18 +105,20 @@ export class HomeScene extends Component {
     }
   }
 
-  private async runPetAction(type: 'feed' | 'bath' | 'play', message: string): Promise<void> {
+  private async runPetAction(type: 'feed' | 'bath' | 'play'): Promise<void> {
     try {
+      let result: PetActionResult | null = null;
+
       if (type === 'feed') {
-        await PetManager.feed();
+        result = await PetManager.feed();
       }
 
       if (type === 'bath') {
-        await PetManager.bath();
+        result = await PetManager.bath();
       }
 
       if (type === 'play') {
-        await PetManager.play();
+        result = await PetManager.play();
       }
 
       await UserManager.getInfo();
@@ -124,7 +126,8 @@ export class HomeScene extends Component {
       await TaskManager.list();
       await BagManager.list();
       this.refreshView();
-      GameToast.showSuccess(message);
+
+      GameToast.showSuccess(result?.message || '操作成功');
     } catch (error) {
       console.error(error);
       GameToast.showError(error instanceof Error ? error.message : '操作失败');
