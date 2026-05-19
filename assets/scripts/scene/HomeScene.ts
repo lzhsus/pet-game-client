@@ -100,7 +100,6 @@ export class HomeScene extends Component {
         GameToast.showSuccess('刷新成功');
       }
     } catch (error) {
-      console.error(error);
       GameToast.showError(error instanceof Error ? error.message : '刷新失败');
     }
   }
