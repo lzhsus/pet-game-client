@@ -92,21 +92,21 @@ export class SignScene extends Component {
     this.setLabel(dayNode, 'DayLabel', `第 ${item.day_no} 天`);
     this.setLabel(dayNode, 'RewardLabel', `+${item.reward_coin}`);
 
-    const sprite = dayNode.getComponent(Sprite);
-    if (!sprite) return;
+    const bgSprite = dayNode.getChildByName('Bg')?.getComponent(Sprite);
+    if (!bgSprite) return;
 
     if (item.signed && this.signedSprite) {
-      sprite.spriteFrame = this.signedSprite;
+      bgSprite.spriteFrame = this.signedSprite;
       return;
     }
 
     if (!item.signed && !item.is_today && !item.is_future && this.missedSprite) {
-      sprite.spriteFrame = this.missedSprite;
+      bgSprite.spriteFrame = this.missedSprite;
       return;
     }
 
     if (this.normalSprite) {
-      sprite.spriteFrame = this.normalSprite;
+      bgSprite.spriteFrame = this.normalSprite;
     }
   }
 
