@@ -15,7 +15,7 @@ export class ShopScene extends Component {
   goodsItemTemplate: Node | null = null;
 
   @property
-  itemGap = 12;
+  itemGap = 0;
 
   @property
   pressScale = 1.08;
