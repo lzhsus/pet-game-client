@@ -5,8 +5,12 @@ export interface BagItemModel {
   user_id: number;
   item_id: number;
   item_name: string;
-  item_type: string;
+  item_type: 'food' | 'clean' | 'toy' | string;
   item_count: number;
+  hunger_value: number;
+  clean_value: number;
+  mood_value: number;
+  exp_value: number;
 }
 
 export class BagManager {
