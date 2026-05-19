@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, instantiate, Label, Node, tween, UITransform, Vec3 } from 'cc';
+import { _decorator, Button, Component, director, instantiate, Label, Node, tween, UITransform, Vec3 } from 'cc';
 import { ApiConfig } from '../core/ApiConfig';
 import { BagItemModel, BagManager } from '../manager/BagManager';
 import { UserManager } from '../manager/UserManager';
@@ -92,14 +92,14 @@ export class BagScene extends Component {
     const buttonLabel = useButton?.getChildByName('ButtonLabel')?.getComponent(Label);
 
     if (buttonLabel) {
-      buttonLabel.string = '使用';
+      buttonLabel.string = '去使用';
     }
 
     if (useButton) {
       useButton.off(Button.EventType.CLICK);
       useButton.on(Button.EventType.CLICK, () => {
         this.playButtonPress(useButton, () => {
-          GameToast.show('使用功能开发中');
+          director.loadScene('Home');
         });
       }, this);
     }
