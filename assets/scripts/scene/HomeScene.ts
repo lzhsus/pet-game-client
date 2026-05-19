@@ -48,7 +48,6 @@ export class HomeScene extends Component {
 
   private async initGame(): Promise<void> {
     try {
-      GameToast.show('连接服务器中...');
       await UserManager.login();
       await UserManager.getInfo();
       await PetManager.getInfo();
@@ -56,7 +55,6 @@ export class HomeScene extends Component {
       await BagManager.list();
       await ShopManager.list();
       this.refreshView();
-      GameToast.showSuccess('服务器连接成功');
     } catch (error) {
       console.error(error);
       GameToast.showError(error instanceof Error ? error.message : '连接失败');
@@ -77,7 +75,6 @@ export class HomeScene extends Component {
   
   public async onClickDailySign(): Promise<void> {
     try {
-      GameToast.show('签到中...');
       const reward = await RewardManager.dailySign();
       await UserManager.getInfo();
       await TaskManager.list();
@@ -110,8 +107,6 @@ export class HomeScene extends Component {
 
   private async runPetAction(type: 'feed' | 'bath' | 'play', message: string): Promise<void> {
     try {
-      GameToast.show('操作中...');
-
       if (type === 'feed') {
         await PetManager.feed();
       }
