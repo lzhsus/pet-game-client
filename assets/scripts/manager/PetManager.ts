@@ -2,6 +2,20 @@ import { Http } from '../core/Http';
 import { PetModel } from '../model/PetModel';
 import { UserManager } from './UserManager';
 
+export interface PetActionResult {
+  pet: PetModel;
+  message: string;
+  used_item?: {
+    id: number;
+    name: string;
+    type: string;
+    hunger_value: number;
+    clean_value: number;
+    mood_value: number;
+    exp_value: number;
+  };
+}
+
 export class PetManager {
   static pet: PetModel | null = null;
 
@@ -26,22 +40,22 @@ export class PetManager {
     return this.pet;
   }
 
-  static async feed(): Promise<PetModel> {
+  static async feed(): Promise<PetActionResult> {
     return this.action('/api/pet/feed');
   }
 
-  static async bath(): Promise<PetModel> {
+  static async bath(): Promise<PetActionResult> {
     return this.action('/api/pet/bath');
   }
 
-  static async play(): Promise<PetModel> {
+  static async play(): Promise<PetActionResult> {
     return this.action('/api/pet/play');
   }
 
-  private static async action(url: string): Promise<PetModel> {
+  private static async action(url: string): Promise<PetActionResult> {
     const res = await Http.post<{
       user: any;
-      pet: PetModel;
+      pet: any;
     }>(url);
 
     if (res.code !== 0) {
@@ -54,6 +68,10 @@ export class PetManager {
       UserManager.updateUser(res.data.user);
     }
 
-    return this.pet;
+    return {
+      pet: this.pet,
+      message: res.data.pet?.message || '操作成功',
+      used_item: res.data.pet?.used_item,
+    };
   }
 }
