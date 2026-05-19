@@ -8322,7 +8322,7 @@
       "__uuid__": "fd979e4c-07a3-4f2c-a70b-7418b569c407@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
-    "todaySprite": {
+    "missedSprite": {
       "__uuid__": "b224a1a3-0430-4b79-9fba-fb4ac554aa05@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
