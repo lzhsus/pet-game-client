@@ -35,6 +35,8 @@ export class SignScene extends Component {
 
   private readonly whiteTextColor = new Color(255, 255, 255, 255);
   private readonly normalTextColor = new Color(127, 73, 35, 255);
+  private readonly signButtonDisabledColor = new Color(160, 160, 160, 255);
+  private readonly signButtonActiveColor = new Color(255, 255, 255, 255);
 
   protected async start(): Promise<void> {
     await this.loadWeekSign();
@@ -59,6 +61,10 @@ export class SignScene extends Component {
   }
 
   public async onClickSign(): Promise<void> {
+    if (RewardManager.weekSign?.today_signed) {
+      return;
+    }
+
     if (this.signButton) {
       await this.playButtonPress(this.signButton);
     }
@@ -124,9 +130,15 @@ export class SignScene extends Component {
       button.interactable = !todaySigned;
     }
 
+    const buttonSprite = this.signButton.getComponent(Sprite);
+    if (buttonSprite) {
+      buttonSprite.color = todaySigned ? this.signButtonDisabledColor : this.signButtonActiveColor;
+    }
+
     const buttonLabel = this.signButton.getChildByName('ButtonLabel')?.getComponent(Label);
     if (buttonLabel) {
       buttonLabel.string = todaySigned ? '今日已签到' : '立即签到领取';
+      buttonLabel.color = this.whiteTextColor;
     }
   }
 
